@@ -1,0 +1,10 @@
+# Empêcher l'exécution de fichiers PHP dans le dossier uploads
+<FilesMatch "\.(php|php3|php4|php5|phtml|pl|py|jsp|asp|sh|cgi)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Empêcher l'accès aux fichiers .htaccess
+<Files ~ "^\.ht">
+    Require all denied
+</Files>

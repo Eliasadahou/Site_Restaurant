@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cahier des Charges - Site Restaurant</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 20px;
+        }
+        h1 {
+            color: #e74c3c;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #2c3e50;
+            border-left: 4px solid #e74c3c;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #34495e;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .uml-diagram {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .timestamp {
+            color: #7f8c8d;
+            font-style: italic;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CAHIER DES CHARGES</h1>
+            <h2>Site Web de Restaurant</h2>
+            <p class="timestamp">Document généré le 26 août 2025</p>
+        </header>
+
+        <div class="section">
+            <h2>1. Introduction</h2>
+            <p>Ce cahier des charges décrit les spécifications techniques et fonctionnelles du site web de restaurant. Le système comprend une interface publique pour les clients et une interface d'administration pour la gestion du contenu.</p>
+        </div>
+
+        <div class="section">
+            <h2>2. Architecture Technique</h2>
+            <h3>2.1 Technologies Utilisées</h3>
+            <ul>
+                <li><strong>Backend:</strong> PHP 8.0+</li>
+                <li><strong>Base de données:</strong> MySQL 8.0</li>
+                <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript</li>
+                <li><strong>Framework CSS:</strong> Bootstrap 5.3</li>
+                <li><strong>Charts:</strong> Chart.js</li>
+                <li><strong>Icônes:</strong> Font Awesome 6.4</li>
+            </ul>
+
+            <h3>2.2 Structure des Bases de Données</h3>
+            <p>Le système utilise deux bases de données distinctes :</p>
+            
+            <h4>Base de données: restaurant</h4>
+            <table>
+                <tr>
+                    <th>Table</th>
+                    <th>Description</th>
+                    <th>Champs principaux</th>
+                </tr>
+                <tr>
+                    <td>menus</td>
+                    <td>Stocke les menus du restaurant</td>
+                    <td>id, date_menu, titre, description, prix, categorie, image</td>
+                </tr>
+                <tr>
+                    <td>plats_du_jour</td>
+                    <td>Plats associés aux menus</td>
+                    <td>id, menu_id, nom_plat, ingredients, prix</td>
+                </tr>
+                <tr>
+                    <td>site_visits</td>
+                    <td>Suivi des visites du site</td>
+                    <td>id, visit_date, ip_address, user_agent, page_visited</td>
+                </tr>
+            </table>
+
+            <h4>Base de données: user_authentication</h4>
+            <table>
+                <tr>
+                    <th>Table</th>
+                    <th>Description</th>
+                    <th>Champs principaux</th>
+                </tr>
+                <tr>
+                    <td>users</td>
+                    <td>Utilisateurs administrateurs</td>
+                    <td>id, username, password, email, created_at</td>
+                </tr>
+                <tr>
+                    <td>contact_messages</td>
+                    <td>Messages de contact des clients</td>
+                    <td>id, email, message, ip_address, created_at, is_read</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>3. Modèle Relationnel</h2>
+            
+            <h3>3.1 Schéma Relationnel</h3>
+            <div class="uml-diagram">
+                <strong>Base: restaurant</strong><br>
+                menus(<u>id</u>, date_menu, titre, description, prix, categorie, image)<br>
+                plats_du_jour(<u>id</u>, menu_id, nom_plat, ingredients, prix)<br>
+                site_visits(<u>id</u>, visit_date, ip_address, user_agent, page_visited)<br><br>
+                
+                <strong>Base: user_authentication</strong><br>
+                users(<u>id</u>, username, password, email, created_at)<br>
+                contact_messages(<u>id</u>, email, message, ip_address, created_at, is_read)
+            </div>
+
+            <h3>3.2 Relations</h3>
+            <ul>
+                <li><strong>menus → plats_du_jour:</strong> Relation 1:N (Un menu peut avoir plusieurs plats)</li>
+                <li><strong>Contraintes d'intégrité:</strong> Clés étrangères et uniques appropriées</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>4. Diagramme UML</h2>
+            
+            <h3>4.1 Diagramme de Classes</h3>
+            <div class="uml-diagram">
+                +----------------+       +-------------------+<br>
+                |     Menu       |       |   PlatDuJour     |<br>
+                +----------------+       +-------------------+<br>
+                | - id: int      |1      *| - id: int        |<br>
+                | - date_menu: date|◇-----| - menu_id: int   |<br>
+                | - titre: string|       | - nom_plat: string|<br>
+                | - description: text|   | - ingredients: text|<br>
+                | - prix: int    |       | - prix: decimal   |<br>
+                | - categorie: enum|     +-------------------+<br>
+                | - image: string|<br>
+                +----------------+<br><br>
+                
+                +----------------+       +---------------------+<br>
+                |     User       |       |   ContactMessage    |<br>
+                +----------------+       +---------------------+<br>
+                | - id: int      |       | - id: int           |<br>
+                | - username: string|    | - email: string     |<br>
+                | - password: string|    | - message: text     |<br>
+                | - email: string |      | - ip_address: string|<br>
+                | - created_at: datetime| | - created_at: datetime|<br>
+                +----------------+       | - is_read: boolean  |<br>
+                                        +---------------------+
+            </div>
+
+            <h3>4.2 Diagramme de Cas d'Utilisation</h3>
+            <ul>
+                <li><strong>Client:</strong>
+                    <ul>
+                        <li>Consulter les menus</li>
+                        <li>Voir les plats du jour</li>
+                        <li>Envoyer un message de contact</li>
+                    </ul>
+                </li>
+                <li><strong>Administrateur:</strong>
+                    <ul>
+                        <li>Gérer les menus</li>
+                        <li>Gérer les plats</li>
+                        <li>Consulter les statistiques</li>
+                        <li>Gérer les messages</li>
+                        <li>Authentification sécurisée</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>5. Fonctionnalités</h2>
+            
+            <h3>5.1 Interface Publique</h3>
+            <ul>
+                <li>Affichage des menus avec images</li>
+                <li>Plats du jour avec descriptions détaillées</li>
+                <li>Formulaire de contact</li>
+                <li>Design responsive</li>
+            </ul>
+
+            <h3>5.2 Interface d'Administration</h3>
+            <ul>
+                <li>Tableau de bord avec statistiques</li>
+                <li>Gestion CRUD des menus</li>
+                <li>Gestion des plats</li>
+                <li>Système d'authentification sécurisé</li>
+                <li>Gestion des messages clients</li>
+                <li>Suivi des visites du site</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>6. Sécurité</h2>
+            <ul>
+                <li>Authentification par hachage de mots de passe</li>
+                <li>Protection contre les injections SQL</li>
+                <li>Gestion des sessions</li>
+                <li>Validation des données d'entrée</li>
+                <li>Protection contre XSS</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>7. Conclusion</h2>
+            <p>Ce cahier des charges décrit un système complet de gestion de restaurant avec une interface moderne et sécurisée. Le système permet une gestion efficace des menus et une expérience utilisateur optimale.</p>
+            
+            <div class="note">
+                <strong>Note:</strong> Ce document peut être imprimé en PDF via le menu d'impression du navigateur (Ctrl+P → Enregistrer au format PDF).
+            </div>
+        </div>
+    </div>
+</body>
+</html>
